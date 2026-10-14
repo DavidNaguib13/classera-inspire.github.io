@@ -6,7 +6,9 @@ Static, animated prototype of the Inspire rewards flow (student + parent), built
 Branches: Core-only offer → upgrade request → parent approves; 18+ offer → guardian approval; low coins → Inspire Plus request; expired / out-of-stock / duplicate states.
 Use the **Student / Parent** switch to approve requests. **EN / ع** switches language and flips to RTL.
 
-**Files:** `index.html`, `styles.css`, `app.js` (core screens), `flows.js` (extra flows: popups, requests, coin requests, parent notifications, payment).
+**Start screen:** the student Home dashboard (`#/home`). Its *My Rewards* card (Explore) opens Inspire; finishing the quest goal or submitting the assignment earns Inspire points that carry into My Inspire.
+
+**Files (load order):** `brands.js` (merchant logos) → `app.js` (Inspire screens) → `flows.js` (extra flows) → `home.js` (Home dashboard + LMS sidebar/top bar). `styles.css` holds all tokens (`:root`) and styles.
 
 ## Run locally
     python3 -m http.server 8000   # then open http://localhost:8000

@@ -103,11 +103,11 @@ ${S.role==="s"?`<span class="chip" title="${t("coins")}">🪙 ${S.coins}</span>`
 <div class="seg" role="group" aria-label="Role"><button aria-pressed="${S.role==="s"}" data-role="s">${t("role_s")}</button><button aria-pressed="${S.role==="p"}" data-role="p">${t("role_p")}</button></div>
 <div class="seg" role="group" aria-label="Language"><button aria-pressed="${!ar}" data-lang="en">EN</button><button aria-pressed="${ar}" data-lang="ar">ع</button></div>`}
 document.addEventListener("click",e=>{const b=e.target.closest("[data-lang],[data-role]");if(!b)return;
-if(b.dataset.lang){S.lang=localStorage.lang=b.dataset.lang}else{S.role=localStorage.role=b.dataset.role;location.hash=S.role==="s"?"#/my":"#/parent";return}render()});
+if(b.dataset.lang){S.lang=localStorage.lang=b.dataset.lang}else{S.role=localStorage.role=b.dataset.role;location.hash=S.role==="s"?"#/home":"#/parent";return}render()});
 /* ---------- screens ---------- */
 const V={
 my(){const r=408*(1-.63);return`<div class="view"><div class="card hero"><div class="ring" style="--off:${r}"><svg width="150" height="150" viewBox="0 0 150 150"><circle class="bg" cx="75" cy="75" r="65"/><circle class="fg" cx="75" cy="75" r="65"/></svg><b><span id="n">0</span><small>${t("pts")}</small></b></div>
-<div><h1>${t("welcome")}</h1><p class="sub">${t("welcome_s")}</p><div class="bar" role="progressbar" aria-valuenow="63" aria-valuemin="0" aria-valuemax="100" aria-label="${t("tier")}"><i style="width:63%"></i></div><p>${t("tier")}: ${t("to_diamond")}</p>
+<div><h1>${t("welcome")}</h1><p class="sub">${t("welcome_s")}</p><div class="bar" role="progressbar" aria-valuenow="63" aria-valuemin="0" aria-valuemax="100" aria-label="${t("tier")}"><i style="width:63%"></i></div><p>${t("tier")}: ${Math.max(0,2547-(S.pts||2450))} ${t("to_pts")}</p>
 <div class="stats"><div><b>12</b>${t("streak")} (${t("days")})</div><div><b>${S.owned.length}</b>${t("mine")}</div></div><p style="margin-top:16px"><a class="btn o" style="background:#fff;display:inline-block;text-decoration:none" href="#/market">${t("explore")}</a> <button class="btn o" style="background:transparent;color:#fff;border-color:#fff" data-recent>${t("recent")}</button></p></div></div>
 <h2 style="margin:28px 0 12px">${t("affects")}</h2><div class="g g2">${[1,2,3,4].map(i=>`<button class="factor" data-f="${i}"><h3>${t("f"+i)}</h3><p class="sub">${t("f"+i+"d")}</p></button>`).join("")}</div></div>`},
 market(){const cats=["all","food","ent","fit","shop","tech","learn"],tabs=["offers","instant","stores"];let body;
@@ -158,6 +158,6 @@ if(b=g("[data-app],[data-dec]")){const i=+(b.dataset.app??b.dataset.dec),r=S.req
 if(r.status==="approved"){if(r.type==="core")S.plan="core";if(r.type==="plus")S.plus+=50}toast(t(r.status));return render(1)}
 if(b=g("[data-go]"))location.hash="#/"+b.dataset.go});
 /* ---------- router ---------- */
-function render(soft){const h=(location.hash.slice(2)||(S.role==="s"?"my":"parent"));S.route=V[h]?h:"my";if(S.role==="p"&&S.route!=="parent")S.route="parent";if(S.role==="s"&&S.route==="parent")S.route="my";
-chrome();$("#main").innerHTML=V[S.route]();if(!soft)window.scrollTo(0,0);const n=$("#n");if(n)count(n,S.route==="plus"?S.plus:2450)}
+function render(soft){const h=(location.hash.slice(2)||(S.role==="s"?"home":"parent"));S.route=V[h]?h:"my";if(S.role==="p"&&S.route!=="parent")S.route="parent";if(S.role==="s"&&S.route==="parent")S.route="my";
+chrome();$("#main").innerHTML=V[S.route]();if(!soft)window.scrollTo(0,0);const n=$("#n");if(n)count(n,S.route==="plus"?S.plus:(S.pts||2450))}
 addEventListener("hashchange",()=>render());render();
